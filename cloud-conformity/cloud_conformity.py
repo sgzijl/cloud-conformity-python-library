@@ -109,7 +109,7 @@ class CloudConformity:
 
         return(self.__process_response(response))
 
-    def create_account(self, aws_account_id, aws_account_name, aws_tag_environment, external_id, cost_package=False, has_real_time_monitoring=True):
+    def create_account(self, aws_account_id, aws_account_name, aws_tag_environment, external_id, cost_package=False, subscriptionType="advanced"):
         """Create a new account to Cloud Conformity organisation.
 
         API Docs: https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md
@@ -120,7 +120,7 @@ class CloudConformity:
             aws_tag_environment (str): The name of the environment the account belongs to. Valid values are: testing, staging, production.
             external_id (str): The organisation's external ID.
             cost_package (bool): True for enabling the cost package add-on for the account (AWS spend analysis, forecasting, monitoring). (default False)
-            has_real_time_monitoring (bool): True for enabling the Real-Time Threat monitoring add-on. (default True)
+            subscriptionType (str): 'advanced' comes with Real-Time threat monitoring enabled, 'essentials' comes with Real-Time threat monitoring disabled. (default 'advanced')
 
         Returns
             dict: To see a sample response, you can access the API Docs link above.
@@ -141,7 +141,7 @@ class CloudConformity:
                         }
                     },
                     "costPackage": cost_package,
-                    "hasRealTimeMonitoring": has_real_time_monitoring
+                    "subscriptionType": subscriptionType
                 }
             }
         }
@@ -344,7 +344,7 @@ class CloudConformity:
         API Docs: https://github.com/cloudconformity/documentation-api/blob/master/Profiles.md
 
         Args:
-            setting_id (str): The Cloud Conformity ID of the communication setting.
+            profile_id (str): The Cloud Conformity ID of the profile.
 
         Returns
             dict: To see a sample response, you can access the API Docs link above.
@@ -359,14 +359,19 @@ class CloudConformity:
 
         return(self.__process_response(response))
 
-    def apply_profile_to_accounts(self, profile_id, account_ids):
+    def apply_profile_to_accounts(self, profile_id, account_ids, mode="replace"):
         """
         Apply profile to a set of accounts under the organisation.
 
         API Docs: https://github.com/cloudconformity/documentation-api/blob/master/Profiles.md
 
         Args:
-            setting_id (str): The Cloud Conformity ID of the communication setting.
+            profile_id (str): The Cloud Conformity ID of the profile.
+            account_id (list): An Array of account Id's that will be configured by the profile.
+            mode (str): Mode of how the profile will be applied to the accounts, i.e. "fill-gaps", "overwrite" or "replace". (default 'replace')
+                        - fill-gaps: Merge existing settings with this Profile. If there is a conflict, the account's existing setting will be used.
+                        - overwrite: Merge existing settings with this Profile. If there is a conflict, the Profile's setting will be used.
+                        - replace  : Clear all existing settings and apply settings from this Profile.
 
         Returns
             dict: To see a sample response, you can access the API Docs link above.
@@ -382,7 +387,7 @@ class CloudConformity:
             "meta": {
                 "accountIds": account_ids,
                 "types": ["rule"],
-                "mode": "replace",
+                "mode": mode,
                 "notes": "Applied from Profile: {profile_name}".format(profile_name=profile_name)
             }
         }
