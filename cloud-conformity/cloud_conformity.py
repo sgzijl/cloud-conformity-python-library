@@ -451,3 +451,41 @@ class CloudConformity:
         )
 
         return(self.__process_response(response))
+
+    def update_account_bot_settings(self, account_id, is_disabled=False, disabled_until=None, scan_interval_hour=None, disabled_regions=[]):
+        endpoint = "/v1/accounts/{}/settings/bot".format(account_id)
+
+        bot_settings = {}
+
+        if is_disabled == True:
+            bot_settings["disabled"] = True
+
+        if disabled_until is not None:
+            bot_settings["disabledUntil"] = int(disabled_until)
+
+        if scan_interval_hour is not None:
+            bot_settings["delay"] = int(scan_interval_hour)
+
+        if len(disabled_regions) > 0:
+            bot_settings["disabledRegions"] = {}
+            for region in disabled_regions:
+                bot_settings["disabledRegions"][region] = True
+
+        payload = {
+            "data": {
+                "type": "accounts",
+                "attributes": {
+                    "settings": {
+                        "bot": bot_settings
+                    }
+                }
+            }
+        }
+
+        response = requests.patch(
+            self.__generate_resource_endpoint(endpoint),
+            headers=self.headers,
+            data=json.dumps(payload)
+        )
+
+        return(self.__process_response(response))
