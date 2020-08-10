@@ -453,6 +453,25 @@ class CloudConformity:
         return(self.__process_response(response))
 
     def update_account_bot_settings(self, account_id, is_disabled=False, disabled_until=None, scan_interval_hour=None, disabled_regions=[]):
+        """
+        Update Conformity Bot settings for an account.
+
+        API Docs: https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md
+
+        Args:
+            account_id (str): The Cloud Conformity ID of the communication setting.
+            is_disabled (bool): A boolean value to disable or enable the Conformity Bot (default False)
+            disabled_until (int): A date-time in Unix Epoch timestamp format (in milliseconds). 
+                                  Setting this value will disable the Conformity Bot until the date and time indicated. 
+                                  Setting this value to null will disable the Conformity Bot indefinitely if disabled field is set to true.
+            scan_interval_hour (int): An integer value that sets the number of hours delay between Conformity Bot runs.
+            disabled_regions (list): This field can only be applied to AWS accounts. 
+                                     An attribute object containing a list of AWS regions for which Conformity Bot runs will be disabled.
+
+        Returns
+            dict: To see a sample response, you can access the API Docs link above.
+        """
+
         endpoint = "/v1/accounts/{}/settings/bot".format(account_id)
 
         bot_settings = {}
