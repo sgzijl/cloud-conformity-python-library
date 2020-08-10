@@ -215,7 +215,7 @@ class CloudConformity:
 
         return(self.__process_response(response))
 
-    def list_accounts(self, aws_account_name=None):
+    def list_accounts(self, aws_account_names=[]):
         """
         Query all accounts that you have access to
 
@@ -237,10 +237,10 @@ class CloudConformity:
 
         response = self.__process_response(response)
 
-        if aws_account_name is not None:
+        if len(aws_account_names) > 0:
             response = {
                 "data": [
-                    x for x in response["data"] if x["attributes"]["name"] == aws_account_name
+                    x for x in response["data"] if x["attributes"]["name"] in aws_account_names
                 ]
             }
 
@@ -452,7 +452,7 @@ class CloudConformity:
 
         return(self.__process_response(response))
 
-    def update_account_bot_settings(self, account_id, is_disabled=False, disabled_until=None, scan_interval_hour=None, disabled_regions=[]):
+    def update_account_bot_settings(self, account_id, is_disabled=False, disabled_until=None, scan_interval_hour=None, disabled_regions=None):
         """
         Update Conformity Bot settings for an account.
 
@@ -464,9 +464,11 @@ class CloudConformity:
             disabled_until (int): A date-time in Unix Epoch timestamp format (in milliseconds). 
                                   Setting this value will disable the Conformity Bot until the date and time indicated. 
                                   Setting this value to null will disable the Conformity Bot indefinitely if disabled field is set to true.
-            scan_interval_hour (int): An integer value that sets the number of hours delay between Conformity Bot runs.
+            scan_interval_hour (int): An integer value that sets the number of hours delay between Conformity Bot runs. 
+                                      Set it to None will not change the current configuration that the bot currently has (default None)
             disabled_regions (list): This field can only be applied to AWS accounts. 
                                      An attribute object containing a list of AWS regions for which Conformity Bot runs will be disabled.
+                                     Set it to None will not change the current configuration that the bot currently has (default None)
 
         Returns
             dict: To see a sample response, you can access the API Docs link above.
@@ -476,8 +478,7 @@ class CloudConformity:
 
         bot_settings = {}
 
-        if is_disabled == True:
-            bot_settings["disabled"] = True
+        bot_settings["disabled"] = is_disabled
 
         if disabled_until is not None:
             bot_settings["disabledUntil"] = int(disabled_until)
@@ -485,10 +486,11 @@ class CloudConformity:
         if scan_interval_hour is not None:
             bot_settings["delay"] = int(scan_interval_hour)
 
-        if len(disabled_regions) > 0:
-            bot_settings["disabledRegions"] = {}
-            for region in disabled_regions:
-                bot_settings["disabledRegions"][region] = True
+        if disabled_regions is not None and isinstance(disabled_regions, list):
+            if len(disabled_regions) > 0:
+                bot_settings["disabledRegions"] = {}
+                for region in disabled_regions:
+                    bot_settings["disabledRegions"][region] = True
 
         payload = {
             "data": {
