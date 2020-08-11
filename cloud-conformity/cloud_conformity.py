@@ -487,8 +487,8 @@ class CloudConformity:
             bot_settings["delay"] = int(scan_interval_hour)
 
         if disabled_regions is not None and isinstance(disabled_regions, list):
+            bot_settings["disabledRegions"] = {}
             if len(disabled_regions) > 0:
-                bot_settings["disabledRegions"] = {}
                 for region in disabled_regions:
                     bot_settings["disabledRegions"][region] = True
 
