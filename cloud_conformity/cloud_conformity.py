@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # Built using Python 3.8.1 on March 16, 2020
 
 import requests
