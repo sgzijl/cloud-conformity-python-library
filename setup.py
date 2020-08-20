@@ -6,8 +6,8 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name="cloud-conformity",
-    version="1.0.0",
+    name="cloud_conformity",
+    version="1.0.1",
     packages=find_packages(),
     url="https://github.com/traveloka/cloud-conformity-python-library",
     license="Apache License 2.0",
