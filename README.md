@@ -1,11 +1,32 @@
 # cloud-conformity-python-library
 Python library to interact with Cloud Conformity API
 
+## Supported Functionality
+Not all APIs are covered by this library yet. You can find the list of supported APIs below:
+
+- External IDs API
+    - [Get Organisation External ID](https://github.com/cloudconformity/documentation-api/blob/master/ExternalId.md#get-organisation-external-id)
+- Accounts API
+    - [Create Account](https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md#create-an-account)
+    - [List Accounts](https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md#list-all-accounts)
+    - [Update Account](https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md#update-account)
+    - [Delete Account](https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md#delete-account)
+    - [Update Account Bot Setting](https://github.com/cloudconformity/documentation-api/blob/master/Accounts.md#update-account-bot-setting)
+- Settings API
+    - [List Communication Settings](https://github.com/cloudconformity/documentation-api/blob/master/Settings.md#get-communication-settings)
+    - [Delete Communication Settings](https://github.com/cloudconformity/documentation-api/blob/master/Settings.md#delete-communication-setting)
+- Profiles API
+    - [List Profiles](https://github.com/cloudconformity/documentation-api/blob/master/Profiles.md#list-all-profiles)
+    - [Get Profile](https://github.com/cloudconformity/documentation-api/blob/master/Profiles.md#get-profile-and-rule-settings)
+    - [Apply Profile to Accounts](https://github.com/cloudconformity/documentation-api/blob/master/Profiles.md#apply-profile-to-accounts)
+- Report Configs API
+    - [Create Report Config](https://github.com/cloudconformity/documentation-api/blob/master/ReportConfigs.md#create-report-config)
 
 ## Requirements
+You should have the following tools to install this library:
 
-* [Python 3.X.X](https://www.python.org/downloads/)
-* [Virtualenv](https://virtualenv.pypa.io/en/latest/) (Optional but recommended)
+- [Python 3.X.X](https://www.python.org/downloads/)
+- [Virtualenv](https://virtualenv.pypa.io/en/latest/) (Optional but recommended)
 
 
 ## Installation
