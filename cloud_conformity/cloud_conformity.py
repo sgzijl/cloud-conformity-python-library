@@ -418,10 +418,11 @@ class CloudConformity:
 
         payload = {
             "data": {
+                "type": "report-config",
                 "attributes": {
                     "accountId": account_id,
                     "configuration": {
-                        "title": "[Cloud Conformity] Report for {}".format(aws_account_name),
+                        "title": "Cloud Conformity Report for {}".format(aws_account_name),
                         "scheduled": True,
                         "frequency": "* * MON",
                         "tz": "Asia/Jakarta",
